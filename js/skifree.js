@@ -19,6 +19,7 @@
    window.addEventListener('keydown', function (e) {
       if (e.key == 'a') skier.mudarDirecao(-1);
       else if (e.key == 'd') skier.mudarDirecao(1);
+      else if (e.key == 'f') skier.mudarVelocidade();
    });
 
    function Montanha () {
@@ -34,6 +35,9 @@
       this.element.className = 'para-frente';
       this.element.style.top = '30px';
       this.element.style.left = parseInt(TAMX/2)-7 + 'px';
+      this.velocidade = 20;
+      this.vidas = 3;
+      this.pontuacao = 0;
 
       this.mudarDirecao = function (giro) {
          if (this.direcao + giro >=0 && this.direcao + giro <=2) {
@@ -43,12 +47,50 @@
       }
 
       this.andar = function () {
+
+        var style = window.getComputedStyle ? getComputedStyle(this.element, null) : this.element.currentStyle;
+
+        var left = style.left;
+        left = left.substring(0, left.length-2);
+
+        var width = style.width;
+        width = width.substring(0, width.length-2);
+
          if (this.direcao == 0) {
-            this.element.style.left = (parseInt(this.element.style.left)-1) + "px";
+            if (parseInt(left) > 0) {
+                this.element.style.left = (parseInt(this.element.style.left)-1) + "px";
+            } else {
+                this.element.className = 'para-frente';
+                this.mudarDirecao(1)
+            }
          }
          if (this.direcao == 2) {
-            this.element.style.left = (parseInt(this.element.style.left)+1) + "px";
+             if ((parseInt(left) + parseInt(width)) < TAMX) {
+                this.element.style.left = (parseInt(this.element.style.left)+1) + "px";
+             } else {
+                 this.element.className = 'para-frente';
+                 this.mudarDirecao(-1);
+             }
          }         
+         
+
+         this.pontuacao += this.velocidade/1000*FPS;
+      }
+
+      this.mudarVelocidade = function () {
+          if (this.velocidade == 20) {
+              this.velocidade = 30;
+          } else this.velocidade = 20;
+      } 
+
+      this.atualizarPlacar = function () {
+          var vidas = document.getElementById("vidas");
+          var pontuacao = document.getElementById("metros");
+          var velocidade = document.getElementById("velocidade");
+          pontuacao.innerHTML = Math.round(this.pontuacao) + " metros";
+          vidas.innerHTML = this.vidas;
+          velocidade.innerHTML = this.velocidade + " m/s";
+
       }
    }
 
@@ -58,6 +100,11 @@
       this.element.className = 'arvore';
       this.element.style.top = TAMY + "px";
       this.element.style.left = Math.floor(Math.random() * TAMX) + "px";
+
+      this.andar = function (vel) {
+        this.element.style.top = (parseInt(this.element.style.top) - (1*vel/20)) + "px";
+      
+      }
    }
 
    function run () {
@@ -67,9 +114,11 @@
          arvores.push(arvore);
       }
       arvores.forEach(function (a) {
-         a.element.style.top = (parseInt(a.element.style.top)-1) + "px";
+         a.andar(skier.velocidade)
       });
       skier.andar();
+      skier.atualizarPlacar();
+    
    }
 
    init();
