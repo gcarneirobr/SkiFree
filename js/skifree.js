@@ -9,6 +9,7 @@
    var skier;
    var direcoes = ['para-esquerda','para-frente','para-direita']
    var arvores = [];
+   var homensMontanha = [];
 
    function init () {
       montanha = new Montanha();
@@ -33,11 +34,12 @@
       this.element = document.getElementById("skier");
       this.direcao = 1; //0-esquerda;1-frente;2-direita
       this.element.className = 'para-frente';
-      this.element.style.top = '30px';
+      this.element.style.top = '120px';
       this.element.style.left = parseInt(TAMX/2)-7 + 'px';
       this.velocidade = 20;
       this.vidas = 3;
       this.pontuacao = 0;
+      this.ultimoHomemMontanha = 0;
 
       this.mudarDirecao = function (giro) {
          if (this.direcao + giro >=0 && this.direcao + giro <=2) {
@@ -103,8 +105,23 @@
 
       this.andar = function (vel) {
         this.element.style.top = (parseInt(this.element.style.top) - (1*vel/20)) + "px";
-      
       }
+   }
+
+   function HomemMontanha() {
+       this.element = document.createElement('div');
+       montanha.element.appendChild(this.element);
+       this.element.className = 'homem-montanha';
+       this.element.style.top = '20px';
+       this.element.style.left = skier.element.style.left;
+       this.velocidade = 21;
+      
+       this.andar = function (skier) {
+           this.element.style.top = (parseInt(this.element.style.top) + (this.velocidade - skier.velocidade)) + 'px';
+           console.log((parseInt(this.element.style.top) + (this.velocidade - skier.velocidade)/1000) + 'px');
+        
+   F
+       }
    }
 
    function run () {
@@ -117,6 +134,14 @@
          a.andar(skier.velocidade)
       });
       skier.andar();
+      homensMontanha.forEach(function (h) {
+        h.andar(skier);
+      });
+      if (skier.ultimoHomemMontanha + 500 < skier.pontuacao) {
+        var homemMontanha = new HomemMontanha();
+        homensMontanha.push(homemMontanha);
+        skier.ultimoHomemMontanha = skier.pontuacao;
+      }
       skier.atualizarPlacar();
     
    }

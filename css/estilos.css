@@ -27,6 +27,14 @@
    position: absolute;
 }
 
+.homem-montanha {
+    background-image: url(skier.png);
+    background-position: -67px -2px;
+    width: 15px;
+    height: 32px;
+    position: absolute;
+}
+
 #montanha {
    border: 1px solid black;
    position: relative;
