@@ -142,7 +142,10 @@
             this.tempo = 0;
             this.contador = 0;
             this.element.style.className = 'skier-batida-arvore';
+            this.arvores = arrayArvores;
+            this.arvore = arvore;
             var instanciaSkier = this;
+            
             
             this.functionTempoParado = setInterval(function() {
                 var display = ['block', 'none'];
@@ -151,7 +154,7 @@
                     instanciaSkier.parado = 0;
                     clearInterval(instanciaSkier.functionTempoParado);
                     instanciaSkier.element.style.className = direcoes[this.direcao];
-                    arvore.animacaoBatida(arrayArvores);
+                    instanciaSkier.arvore.animacaoBatida(instanciaSkier.arvores);
                 };               
                 instanciaSkier.tempo++;
                 
@@ -180,8 +183,6 @@
         } else if (this.probabilidade < 90) {
             this.indexClasse = 4;
         } else this.indexClasse = 5;
-
-        console.log(this.probabilidade);
 
         this.element.className = classesObstaculo[this.indexClasse];
         this.element.style.top = TAMY + "px";
@@ -220,21 +221,18 @@
             if (!skier.parado) {
                 this.functionAnimacao = setInterval(function() {
                     if (instanciaArvore.contadorAnimacao > 6) {
-                        var index = instanciaArvore.arvores.indexOf(instanciaArvore);
-                        arvores.splice(index, 1);
-                        instanciaArvore.removeArvore();
+                        instanciaArvore.removeArvore(arvores);
                         clearInterval(instanciaArvore.functionAnimacao);
                     }
                     instanciaArvore.contadorAnimacao++;
                     instanciaArvore.element.style.display = display[instanciaArvore.contadorAnimacao % 2];
-                }, 500);
+                }, 200);
             }
-
-       
-
         }
 
-        this.removeArvore = function() {
+        this.removeArvore = function(arvores) {
+            var index = arvores.indexOf(this);
+            arvores.splice(index, 1);
             montanha.element.removeChild(this.element);
         }
 
@@ -291,13 +289,9 @@
             }
 
             arvores.forEach(function (a) {
-                a.andar(skier.velocidade)
-                
-                if (a.saiuTela()) {
-                    a.removeArvore(arvores)
-                }
+                a.andar(skier.velocidade);
 
-                if (a.continuaNoJogo) {
+                if (a.continuaNoJogo && !a.saiuTela()) {
                     if (testColisao(skier, a)) {
                         skier.vidas--;
                         skier.animacaoBatida(a, arvores);
@@ -307,6 +301,9 @@
                     }
                 }
             
+                if (a.saiuTela()) {
+                    a.removeArvore(arvores);
+                }
             });
 
             skier.andar();
