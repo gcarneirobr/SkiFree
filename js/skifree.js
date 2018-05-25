@@ -84,6 +84,7 @@
         this.ultimoHomemMontanha = 0;
         this.parado = 0;
         this.functionTempoParado;
+        this.functionAnimacaoHomemMontanha;
 
         this.mudarDirecao = function (giro) {
             if (this.direcao + giro >= 0 && this.direcao + giro <= 2) {
@@ -162,7 +163,18 @@
         }
 
         this.animacaoHomemMontanha = function () {
-
+            this.contador = 0;
+            var instancia = this;
+          
+            this.functionAnimacaoHomemMontanha = setInterval(function() {
+                instancia.element.className = 'animacao-homem-montanha' + instancia.contador;
+                instancia.contador++;
+                if (instancia.contador > 8) {
+                    clearInterval(instancia.functionAnimacaoHomemMontanha);
+                }
+            }, 100);
+      
+            
         }
     }
 
