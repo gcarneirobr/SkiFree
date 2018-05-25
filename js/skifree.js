@@ -141,11 +141,10 @@
             this.parado = 1;
             this.tempo = 0;
             this.contador = 0;
-            this.element.style.className = 'skier-batida-arvore';
+            this.element.className = 'skier-batida-arvore';
             this.arvores = arrayArvores;
             this.arvore = arvore;
             var instanciaSkier = this;
-            
             
             this.functionTempoParado = setInterval(function() {
                 var display = ['block', 'none'];
