@@ -34,6 +34,46 @@
    position: absolute;
 }
 
+.arvore-chamas {
+    background-image: url(obstacles.png);
+    background-position: -49px -102px;   
+    width: 22px;
+    height: 29px;   
+    position: absolute;
+ }
+ 
+ .toco {
+    background-image: url(obstacles.png);
+    background-position: -252px -51px;   
+    width: 18px;
+    height: 12px;   
+    position: absolute;
+ }
+
+ .cachorro {
+    background-image: url(skier.png);
+    background-position: -0px -208px;   
+    width: 22px;
+    height: 15px;   
+    position: absolute;
+ }
+
+ .rocha {
+    background-image: url(obstacles.png);
+    background-position: -30px -47px;   
+    width: 23px;
+    height: 16px;   
+    position: absolute;
+ }
+
+ .arvore-grande {
+    background-image: url(obstacles.png);
+    background-position: -96px -66px;   
+    width: 32px;
+    height: 64px;   
+    position: absolute;
+ }
+
 .homem-montanha {
     background-image: url(skier.png);
     background-position: -67px -2px;
@@ -41,6 +81,7 @@
     height: 32px;
     position: absolute;
 }
+
 
 #montanha {
    border: 1px solid black;

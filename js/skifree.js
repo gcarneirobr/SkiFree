@@ -11,6 +11,7 @@
     var montanha;
     var skier;
     var direcoes = ['para-esquerda', 'para-frente', 'para-direita']
+    var classesObstaculo = ['arvore', 'arvore-chamas', 'rocha', 'toco', 'cachorro', 'arvore-grande'];
     var arvores = [];
     var homemMontanha = null;
 
@@ -166,7 +167,23 @@
     function Arvore() {
         this.element = document.createElement('div');
         montanha.element.appendChild(this.element);
-        this.element.className = 'arvore';
+        this.probabilidade = Math.random() * 100;
+        this.indexClasse;
+        if (this.probabilidade < 40) {
+            this.indexClasse = 0;
+        } else if (this.probabilidade < 55) {
+            this.indexClasse = 1;
+        } else if (this.probabilidade < 70) {
+            this.indexClasse = 2;
+        } else if (this.probabilidade < 80) {
+            this.indexClasse = 3;
+        } else if (this.probabilidade < 90) {
+            this.indexClasse = 4;
+        } else this.indexClasse = 5;
+
+        console.log(this.probabilidade);
+
+        this.element.className = classesObstaculo[this.indexClasse];
         this.element.style.top = TAMY + "px";
         this.element.style.left = Math.floor(Math.random() * TAMX) + "px";
         this.continuaNoJogo = true;
@@ -283,11 +300,10 @@
                 if (a.continuaNoJogo) {
                     if (testColisao(skier, a)) {
                         skier.vidas--;
-                        skier.animacaoBatida(a);
+                        skier.animacaoBatida(a, arvores);
                         if (skier.vidas < 0) {
                             montanha.fimJogo();
                         }
-                        
                     }
                 }
             
