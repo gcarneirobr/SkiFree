@@ -4,12 +4,13 @@
    const TAMX = 300;
    const TAMY = 400;
    const PROB_ARVORE = 2;
+   const FREQUENCIA_HOMEM_MONTANHA = 500;
    var gameLoop;
    var montanha;
    var skier;
    var direcoes = ['para-esquerda','para-frente','para-direita']
    var arvores = [];
-   var homensMontanha = [];
+   var homemMontanha = null;
 
    function init () {
       montanha = new Montanha();
@@ -34,7 +35,7 @@
       this.element = document.getElementById("skier");
       this.direcao = 1; //0-esquerda;1-frente;2-direita
       this.element.className = 'para-frente';
-      this.element.style.top = '120px';
+      this.element.style.top = '140px';
       this.element.style.left = parseInt(TAMX/2)-7 + 'px';
       this.velocidade = 20;
       this.vidas = 3;
@@ -114,13 +115,28 @@
        this.element.className = 'homem-montanha';
        this.element.style.top = '20px';
        this.element.style.left = skier.element.style.left;
-       this.velocidade = 21;
+       this.velocidade = 25;
+
+       this.saiuTela = function() {
+
+        var style = window.getComputedStyle ? getComputedStyle(this.element, null) : this.element.currentStyle;
+
+        var top = style.top;
+        top = top.substring(0, top.length-2);
+
+        var height = style.height;
+        height = height.substring(0, height.length-2);
+
+        if (parseInt(top) + parseInt(height) < 0) {
+            return true;
+        }
+        return false;
+           
+       }
       
        this.andar = function (skier) {
-           this.element.style.top = (parseInt(this.element.style.top) + (this.velocidade - skier.velocidade)) + 'px';
-           console.log((parseInt(this.element.style.top) + (this.velocidade - skier.velocidade)/1000) + 'px');
-        
-   F
+           this.element.style.top = (parseInt(this.element.style.top) + (this.velocidade - skier.velocidade)/3) + 'px';
+           this.element.style.left = skier.element.style.left;
        }
    }
 
@@ -134,16 +150,17 @@
          a.andar(skier.velocidade)
       });
       skier.andar();
-      homensMontanha.forEach(function (h) {
-        h.andar(skier);
-      });
-      if (skier.ultimoHomemMontanha + 500 < skier.pontuacao) {
-        var homemMontanha = new HomemMontanha();
-        homensMontanha.push(homemMontanha);
-        skier.ultimoHomemMontanha = skier.pontuacao;
+      if (!(homemMontanha === null)) {
+          homemMontanha.andar(skier);
+          if (homemMontanha.saiuTela()){
+              homemMontanha = null;
+          }
+      }
+      if ((homemMontanha === null) && (skier.ultimoHomemMontanha + FREQUENCIA_HOMEM_MONTANHA < skier.pontuacao)) {
+          skier.ultimoHomemMontanha = skier.pontuacao;
+          homemMontanha = new HomemMontanha();
       }
       skier.atualizarPlacar();
-    
    }
 
    init();
