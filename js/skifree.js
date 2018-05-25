@@ -5,7 +5,8 @@
     const TAMY = 400;
     const PROB_ARVORE = 2;
     const FREQUENCIA_HOMEM_MONTANHA = 500;
-    const MARGEM_COLISAO = 2;
+    const MARGEM_COLISAO_OBSTACULO = 2;
+    const MARGEM_COLISAO_HOMEM_MONTANHA = 15;
     var gameLoop;
     var montanha;
     var skier;
@@ -13,7 +14,7 @@
     var arvores = [];
     var homemMontanha = null;
 
-    function testColisao(a, b) {
+    function testColisao(a, b, margemColisao) {
         var styleA = window.getComputedStyle ? getComputedStyle(a.element, null) : a.element.currentStyle;
         var topA = styleA.top;
         topA = parseInt(topA.substring(0, topA.length - 2));
@@ -35,7 +36,7 @@
         var widthB = styleB.width;
         widthB = parseInt(widthB.substring(0, widthB.length - 2));
 
-        var cantoInferiorDireito =  ((topB <= topA + heightA) && (leftB <= leftA + widthA)) && ((topB+heightB >= topA+heightA) && (leftB+widthB >=leftA+widthA));
+        var cantoInferiorDireito =  ((topB <= topA + heightA - margemColisao) && (leftB <= leftA + widthA - margemColisao)) && ((topB+heightB >= topA+heightA) && (leftB+widthB >=leftA+widthA));
         var cantoSuperiorDireito =  ((topB + heightB >= topA) && (leftB < leftA + widthA)) && ((topB <= topA) && (leftB + widthB >= leftA + widthA));
         var cantoSuperiorEsquerdo =  ((leftB + widthB >= leftA) && (topB + heightB >= topA)) && ((topB <= topA) && (leftB <= leftA));
         var cantoInferiorEsquerdo =  ((topB <= topA + heightA) && (leftB + widthB >= leftA)) && ((topB + heightB >= topA + heightA) && (leftB <= leftA));
