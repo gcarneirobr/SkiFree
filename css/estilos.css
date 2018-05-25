@@ -19,6 +19,13 @@
    height: 32px;
 }
 
+.skier-batida-arvore {
+    background-image: url(skier.png);
+    background-position: -67px -2px;
+    width: 15px;
+    height: 32px;
+ }
+
 .arvore {
    background-image: url(obstacles.png);
    background-position: -0px -31px;   
