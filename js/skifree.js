@@ -35,10 +35,12 @@
         var widthB = styleB.width;
         widthB = parseInt(widthB.substring(0, widthB.length - 2));
 
-        var result = ((topA + heightA >= topB) && (leftA + widthA >= leftB)) ||
-        ((topA <= topB + heightB) && (leftA + widthA >= leftB)) ||
-        ((topA <= topB + heightB) && (leftA <= leftB + widthB)) ||
-        ((topA + heightA >= topB) && (leftA <= leftB + widthB));
+        var cantoInferiorDireito =  ((topB <= topA + heightA) && (leftB <= leftA + widthA));
+        var cantoSuperiorDireito =  ((topB + heightB >= topA) && (leftB < leftA + widthA));
+        var cantoSuperiorEsquerdo =  ((leftB + widthB >= leftA) && (topB + heightB >= topA));
+        var cantoInferiorEsquerdo =  ((topB <= topA + heightA) && (leftB + widthB >= leftA));
+
+        var result = cantoInferiorDireito || cantoInferiorEsquerdo || cantoSuperiorDireito || cantoSuperiorEsquerdo;
 
         return result;
 
