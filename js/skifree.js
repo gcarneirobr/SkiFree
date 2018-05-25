@@ -277,9 +277,7 @@
                 a.andar(skier.velocidade)
                 
                 if (a.saiuTela()) {
-                    var index = arvores.indexOf(a);
-                    arvores.splice(index, 1);
-                    a.removeArvore();
+                    a.removeArvore(arvores)
                 }
 
                 if (a.continuaNoJogo) {
@@ -290,9 +288,6 @@
                             montanha.fimJogo();
                         }
                         
-                        if (!a.continuaNoJogo) {
-            
-                        }
                     }
                 }
             
