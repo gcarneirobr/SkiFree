@@ -37,10 +37,10 @@
         var widthB = styleB.width;
         widthB = parseInt(widthB.substring(0, widthB.length - 2));
 
-        var cantoInferiorDireito =  ((topB <= topA + heightA) && (leftB <= leftA + widthA)) && ((topB+heightB >= topA+heightA) && (leftB+widthB >=leftA+widthA));
-        var cantoSuperiorDireito =  ((topB + heightB >= topA) && (leftB < leftA + widthA)) && ((topB <= topA) && (leftB + widthB >= leftA + widthA));
-        var cantoSuperiorEsquerdo =  ((leftB + widthB >= leftA) && (topB + heightB >= topA)) && ((topB <= topA) && (leftB <= leftA));
-        var cantoInferiorEsquerdo =  ((topB <= topA + heightA) && (leftB + widthB >= leftA)) && ((topB + heightB >= topA + heightA) && (leftB <= leftA));
+        var cantoInferiorDireito = ((topB <= topA + heightA) && (leftB <= leftA + widthA)) && ((topB + heightB >= topA + heightA) && (leftB + widthB >= leftA + widthA));
+        var cantoSuperiorDireito = ((topB + heightB >= topA) && (leftB < leftA + widthA)) && ((topB <= topA) && (leftB + widthB >= leftA + widthA));
+        var cantoSuperiorEsquerdo = ((leftB + widthB >= leftA) && (topB + heightB >= topA)) && ((topB <= topA) && (leftB <= leftA));
+        var cantoInferiorEsquerdo = ((topB <= topA + heightA) && (leftB + widthB >= leftA)) && ((topB + heightB >= topA + heightA) && (leftB <= leftA));
 
         var result = cantoInferiorDireito || cantoInferiorEsquerdo || cantoSuperiorDireito || cantoSuperiorEsquerdo;
 
@@ -146,8 +146,8 @@
             this.arvores = arrayArvores;
             this.arvore = arvore;
             var instanciaSkier = this;
-            
-            this.functionTempoParado = setInterval(function() {
+
+            this.functionTempoParado = setInterval(function () {
                 var display = ['block', 'none'];
                 instanciaSkier.element.style.display = display[instanciaSkier.tempo % 2];
                 if (instanciaSkier.tempo > 3) {
@@ -155,26 +155,15 @@
                     clearInterval(instanciaSkier.functionTempoParado);
                     instanciaSkier.element.style.className = direcoes[this.direcao];
                     instanciaSkier.arvore.animacaoBatida(instanciaSkier.arvores);
-                };               
+                };
                 instanciaSkier.tempo++;
-                
+
             }, TEMPO_SKIER_PARADO_COLISAO);
-            
+
         }
 
-        this.animacaoHomemMontanha = function () {
-            this.contador = 0;
-            var instancia = this;
-          
-            this.functionAnimacaoHomemMontanha = setInterval(function() {
-                instancia.element.className = 'animacao-homem-montanha' + instancia.contador;
-                instancia.contador++;
-                if (instancia.contador > 8) {
-                    clearInterval(instancia.functionAnimacaoHomemMontanha);
-                }
-            }, 100);
-      
-            
+        this.hide = function () {
+            this.element.style.display = 'none';
         }
     }
 
@@ -222,7 +211,7 @@
         }
 
         this.animacaoBatida = function (arvores) {
-            
+
             this.contadorAnimacao = 0;
             this.continuaNoJogo = 0;
             var display = ['block', 'none'];
@@ -230,7 +219,7 @@
             var instanciaArvore = this;
 
             if (!skier.parado) {
-                this.functionAnimacao = setInterval(function() {
+                this.functionAnimacao = setInterval(function () {
                     if (instanciaArvore.contadorAnimacao > 6) {
                         instanciaArvore.removeArvore(arvores);
                         clearInterval(instanciaArvore.functionAnimacao);
@@ -241,7 +230,7 @@
             }
         }
 
-        this.removeArvore = function(arvores) {
+        this.removeArvore = function (arvores) {
             var index = arvores.indexOf(this);
             arvores.splice(index, 1);
             montanha.element.removeChild(this.element);
@@ -278,6 +267,19 @@
             this.element.style.top = (parseInt(this.element.style.top) + (this.velocidade - skier.velocidade) / 3) + 'px';
             this.element.style.left = skier.element.style.left;
         }
+
+        this.animacaoHomemMontanha = function () {
+            this.contador = 0;
+            var instancia = this;
+
+            this.functionAnimacaoHomemMontanha = setInterval(function () {
+                instancia.element.className = 'animacao-homem-montanha' + instancia.contador;
+                instancia.contador++;
+                if (instancia.contador > 8) {
+                    clearInterval(instancia.functionAnimacaoHomemMontanha);
+                }
+            }, 100);
+        }
     }
 
     function Cogumelo() {
@@ -311,7 +313,7 @@
                         }
                     }
                 }
-            
+
                 if (a.saiuTela()) {
                     a.removeArvore(arvores);
                 }
@@ -322,7 +324,8 @@
             if (!(homemMontanha === null)) {
                 homemMontanha.andar(skier);
                 if (testColisao(skier, homemMontanha)) {
-                    skier.animacaoHomemMontanha();
+                    homemMontanha.animacaoHomemMontanha();
+                    skier.hide();
                     montanha.fimJogo();
                 }
                 if (homemMontanha.saiuTela()) {
