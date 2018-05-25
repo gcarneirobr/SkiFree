@@ -5,6 +5,7 @@
     const TAMY = 400;
     const PROB_ARVORE = 2;
     const FREQUENCIA_HOMEM_MONTANHA = 500;
+    const MARGEM_COLISAO = 2;
     var gameLoop;
     var montanha;
     var skier;
@@ -33,8 +34,13 @@
         heightB = parseInt(heightB.substring(0, heightB.length - 2));
         var widthB = styleB.width;
         widthB = parseInt(widthB.substring(0, widthB.length - 2));
-        
 
+        var result = ((topA + heightA >= topB) && (leftA + widthA >= leftB)) ||
+        ((topA <= topB + heightB) && (leftA + widthA >= leftB)) ||
+        ((topA <= topB + heightB) && (leftA <= leftB + widthB)) ||
+        ((topA + heightA >= topB) && (leftA <= leftB + widthB));
+
+        return result;
 
     }
 
@@ -127,11 +133,11 @@
 
         this.animacaoBatida = function () {
             this.parado = 1;
-            
+
         }
-        
-        this.animacaoHomemMontanha  = function () {
-            
+
+        this.animacaoHomemMontanha = function () {
+
         }
     }
 
@@ -146,12 +152,19 @@
             this.element.style.top = (parseInt(this.element.style.top) - (1 * vel / 20)) + "px";
         }
 
-        this.testColisao = function (skier) {
-
-        }
-
         this.saiuTela = function () {
+            var style = window.getComputedStyle ? getComputedStyle(this.element, null) : this.element.currentStyle;
 
+            var top = style.top;
+            top = top.substring(0, top.length - 2);
+
+            var height = style.height;
+            height = height.substring(0, height.length - 2);
+
+            if (parseInt(top) + parseInt(height) < 0) {
+                return true;
+            }
+            return false;
         }
     }
 
@@ -193,15 +206,11 @@
         this.element.className = 'cogumelo';
         this.element.style.top = '20px';
         this.element.style.left = Math.floor(Math.random() * TAMX) + "px";
-
-        this.testColisao  = function (skier) {
-
-        }
     }
 
     function run() {
 
-        if (!skier.parado()) {
+       // if (!skier.parado) {
 
             var random = Math.floor(Math.random() * 1000);
             if (random <= PROB_ARVORE * 10) {
@@ -211,25 +220,28 @@
 
             arvores.forEach(function (a) {
                 a.andar(skier.velocidade)
+                /*
                 if (a.saiuTela()) {
                     var index = arvores.indexOf(a);
                     arvores.splice(index, 1);
                 }
+                */
 
-                if (arvore.testColisao(skier)) {
+                if (testColisao(skier, a)) {
                     skier.vidas--;
                     skier.animacaoBatida();
                     if (skier.vidas < 0) {
                         montanha.fimJogo();
                     }
                 }
+            
             });
 
             skier.andar();
 
             if (!(homemMontanha === null)) {
                 homemMontanha.andar(skier);
-                if (homemMontanha.testColisao(skier)) {
+                if (testColisao(skier, homemMontanha)) {
                     skier.animacaoHomemMontanha();
                     montanha.fimJogo();
                 }
@@ -239,11 +251,10 @@
                 }
             }
             if ((homemMontanha === null) && (skier.ultimoHomemMontanha + FREQUENCIA_HOMEM_MONTANHA < skier.pontuacao)) {
-
                 homemMontanha = new HomemMontanha();
             }
             skier.atualizarPlacar();
-        }
+      //  }
     }
 
     init();
