@@ -41,6 +41,31 @@
     position: absolute;
  }
 
+.frame-fim-jogo {
+   border: 3px solid black;
+   height: 30%;
+   width: 60%;
+   display: block;
+   margin: 35% 20%;
+   border-radius: 5px;
+   position: relative;
+   background: gray;
+   overflow: hidden;
+   opacity: 0.95;
+}
+
+.frame-fim-jogo span {
+    width: 90%; 
+    margin: 5%;
+    font-size: 14px;
+    text-align: center;
+}
+.frame-fim-jogo h5 {
+    width:60%;
+    margin: 15%;
+    text-align: center;
+}
+
 .arvore {
    background-image: url(obstacles.png);
    background-position: -0px -31px;   

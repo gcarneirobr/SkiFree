@@ -4,7 +4,7 @@
     const TAMX = 300;
     const TAMY = 400;
     const PROB_ARVORE = 2;
-    const PROB_COGUMELO = 0.1;
+    const PROB_COGUMELO = 0.01;
     const FREQUENCIA_HOMEM_MONTANHA = 500;
     const TEMPO_SKIER_PARADO_COLISAO = 100;
     var gameLoop;
@@ -67,6 +67,12 @@
         this.element.style.height = TAMY + "px";
 
         this.fimJogo = function () {
+
+            var frameFimJogo = document.createElement('div');
+            frameFimJogo.className = 'frame-fim-jogo';
+            frameFimJogo.innerHTML = '<h5> FIM DE JOGO! </h5>' +
+                            '<span> Sua pontuacao foi: ' + skier.pontuacao + '</span>'; 
+            montanha.element.appendChild(frameFimJogo);
 
             clearInterval(gameLoop);
         }
@@ -382,7 +388,7 @@
                 if (c.continuaNoJogo && !c.saiuTela()) {
                     if (testColisao(skier, c)) {
                         skier.vidas++;
-                        c.animacaoCogumelo();
+                        c.animacaoCogumelo(cogumelos);
                     }
                 }
 
