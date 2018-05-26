@@ -141,7 +141,6 @@
         this.animacaoBatida = function (arvore, arrayArvores) {
             this.parado = 1;
             this.tempo = 0;
-            this.contador = 0;
             this.element.className = 'skier-batida-arvore';
             this.arvores = arrayArvores;
             this.arvore = arvore;
@@ -153,13 +152,29 @@
                 if (instanciaSkier.tempo > 3) {
                     instanciaSkier.parado = 0;
                     clearInterval(instanciaSkier.functionTempoParado);
-                    instanciaSkier.element.style.className = direcoes[this.direcao];
+                    instanciaSkier.element.className = direcoes[instanciaSkier.direcao];
                     instanciaSkier.arvore.animacaoBatida(instanciaSkier.arvores);
                 };
                 instanciaSkier.tempo++;
 
             }, TEMPO_SKIER_PARADO_COLISAO);
 
+        }
+
+        this.animacaoFimVidas = function () {
+            this.tempo = 0;
+            this.element.className = 'skier-fim-vidas';
+            var instanciaSkier = this;
+
+            this.functionBlink = setInterval(function () {
+                var display = ['block', 'none'];
+                instanciaSkier.element.style.display = display[instanciaSkier.tempo % 2];
+                if (instanciaSkier.tempo > 3) {
+                    clearInterval(instanciaSkier.functionBlink);
+                };
+                instanciaSkier.tempo++;
+
+            }, TEMPO_SKIER_PARADO_COLISAO);
         }
 
         this.hide = function () {
@@ -307,9 +322,11 @@
                 if (a.continuaNoJogo && !a.saiuTela()) {
                     if (testColisao(skier, a)) {
                         skier.vidas--;
-                        skier.animacaoBatida(a, arvores);
                         if (skier.vidas < 0) {
+                            skier.animacaoFimVidas();
                             montanha.fimJogo();
+                        } else {
+                            skier.animacaoBatida(a, arvores);
                         }
                     }
                 }

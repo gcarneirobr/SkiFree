@@ -26,6 +26,13 @@
     height: 27px;
  }
 
+.skier-fim-vidas {
+    background-image: url(skier.png);
+    background-position: -241px -267px;
+    width: 32px;
+    height: 34px;
+}
+
 .arvore {
    background-image: url(obstacles.png);
    background-position: -0px -31px;   
