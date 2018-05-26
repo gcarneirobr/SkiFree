@@ -6,7 +6,6 @@
     const PROB_ARVORE = 2;
     const PROB_COGUMELO = 0.1;
     const FREQUENCIA_HOMEM_MONTANHA = 500;
-    const MARGEM_COLISAO = 2;
     const TEMPO_SKIER_PARADO_COLISAO = 100;
     var gameLoop;
     var montanha;
@@ -39,10 +38,10 @@
         var widthB = styleB.width;
         widthB = parseInt(widthB.substring(0, widthB.length - 2));
 
-        var cantoInferiorDireito = ((topB <= topA + heightA) && (leftB <= leftA + widthA)) && ((topB + heightB >= topA + heightA) && (leftB + widthB >= leftA + widthA));
-        var cantoSuperiorDireito = ((topB + heightB >= topA) && (leftB < leftA + widthA)) && ((topB <= topA) && (leftB + widthB >= leftA + widthA));
-        var cantoSuperiorEsquerdo = ((leftB + widthB >= leftA) && (topB + heightB >= topA)) && ((topB <= topA) && (leftB <= leftA));
-        var cantoInferiorEsquerdo = ((topB <= topA + heightA) && (leftB + widthB >= leftA)) && ((topB + heightB >= topA + heightA) && (leftB <= leftA));
+        var cantoInferiorDireito = ((topB <= topA + heightA) && (leftB <= leftA + widthA) && (leftB >= leftA)) && ((topB + heightB >= topA + heightA));
+        var cantoSuperiorDireito = ((topB + heightB >= topA) && (leftB <= leftA + widthA) && (leftB >= leftA)) && ((topB <= topA));
+        var cantoSuperiorEsquerdo = ((leftB + widthB >= leftA) && (topB + heightB >= topA) && (leftB + widthB <= leftA + widthA)) && ((topB <= topA));
+        var cantoInferiorEsquerdo = ((topB <= topA + heightA) && (leftB + widthB >= leftA) && (leftB + widthB <= leftA + widthA)) && ((topB + heightB >= topA + heightA));
 
         var result = cantoInferiorDireito || cantoInferiorEsquerdo || cantoSuperiorDireito || cantoSuperiorEsquerdo;
 
