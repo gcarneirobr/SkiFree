@@ -19,6 +19,20 @@
    height: 32px;
 }
 
+.skier-batida-arvore {
+    background-image: url(skier.png);
+    background-position: -82px -83px;
+    width: 34px;
+    height: 27px;
+ }
+
+.skier-fim-vidas {
+    background-image: url(skier.png);
+    background-position: -241px -267px;
+    width: 32px;
+    height: 34px;
+}
+
 .arvore {
    background-image: url(obstacles.png);
    background-position: -0px -31px;   
@@ -27,11 +41,113 @@
    position: absolute;
 }
 
-.homem-montanha {
+.arvore-chamas {
+    background-image: url(obstacles.png);
+    background-position: -49px -102px;   
+    width: 22px;
+    height: 29px;   
+    position: absolute;
+ }
+ 
+ .toco {
+    background-image: url(obstacles.png);
+    background-position: -252px -51px;   
+    width: 18px;
+    height: 12px;   
+    position: absolute;
+ }
+
+ .cachorro {
     background-image: url(skier.png);
-    background-position: -67px -2px;
-    width: 15px;
-    height: 32px;
+    background-position: -0px -208px;   
+    width: 22px;
+    height: 15px;   
+    position: absolute;
+ }
+
+ .rocha {
+    background-image: url(obstacles.png);
+    background-position: -30px -47px;   
+    width: 23px;
+    height: 16px;   
+    position: absolute;
+ }
+
+ .arvore-grande {
+    background-image: url(obstacles.png);
+    background-position: -96px -66px;   
+    width: 32px;
+    height: 64px;   
+    position: absolute;
+ }
+
+.homem-montanha, .animacao-homem-montanha0 {
+    background-image: url(skier.png);
+    background-position: -0px -112px;
+    width: 33px;
+    height: 43px;
+    position: absolute;
+}
+
+.animacao-homem-montanha1 {
+    background-image: url(skier.png);
+    background-position: -33px -112px;
+    width: 30px;
+    height: 43px;
+    position: absolute;
+}
+.animacao-homem-montanha2 {
+    background-image: url(skier.png);
+    background-position: -63px -112px;
+    width: 27px;
+    height: 43px;
+    position: absolute;
+}
+
+.animacao-homem-montanha3 {
+    background-image: url(skier.png);
+    background-position: -90px -112px;
+    width: 32px;
+    height: 43px;
+    position: absolute;
+}
+
+.animacao-homem-montanha4 {
+    background-image: url(skier.png);
+    background-position: -122px -112px;
+    width: 34px;
+    height: 43px;
+    position: absolute;
+}
+
+.animacao-homem-montanha5 {
+    background-image: url(skier.png);
+    background-position: -156px -112px;
+    width: 31px;
+    height: 43px;
+    position: absolute;
+}
+
+.animacao-homem-montanha6 {
+    background-image: url(skier.png);
+    background-position: -187px -112px;
+    width: 31px;
+    height: 43px;
+    position: absolute;;
+}
+
+.animacao-homem-montanha7 {
+    background-image: url(skier.png);
+    background-position: -218px -112px;
+    width: 25px;
+    height: 43px;
+    position: absolute;
+}
+.animacao-homem-montanha8 {
+    background-image: url(skier.png);
+    background-position: -243px -112px;
+    width: 27px;
+    height: 43px;
     position: absolute;
 }
 
