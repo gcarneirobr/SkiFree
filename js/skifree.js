@@ -38,14 +38,16 @@
         var widthB = styleB.width;
         widthB = parseInt(widthB.substring(0, widthB.length - 2));
 
-        var cantoInferiorDireito = ((topB <= topA + heightA) && (leftB <= leftA + widthA) && (leftB >= leftA)) && ((topB + heightB >= topA + heightA));
-        var cantoSuperiorDireito = ((topB + heightB >= topA) && (leftB <= leftA + widthA) && (leftB >= leftA)) && ((topB <= topA));
-        var cantoSuperiorEsquerdo = ((leftB + widthB >= leftA) && (topB + heightB >= topA) && (leftB + widthB <= leftA + widthA)) && ((topB <= topA));
-        var cantoInferiorEsquerdo = ((topB <= topA + heightA) && (leftB + widthB >= leftA) && (leftB + widthB <= leftA + widthA)) && ((topB + heightB >= topA + heightA));
+        //feito em relacao a A
+        var cantoInferiorDireito = ((topA + heightA >= topB) && (topB + heightB >= topA + heightA) && (leftB >= leftA)) && (leftB <= leftA + widthA);
+        var cantoSuperiorDireito = ((topA <= topB + heightB) && (topB <= topA) && (leftB >= leftA)) && ((leftB <= leftA + widthA));
+        var cantoSuperiorEsquerdo = ((topA <= topB + heightB) && (topB <= topA) && (leftB + widthB >= leftA)) && ((leftA + widthA >= leftB + widthB));
+        var cantoInferiorEsquerdo = ((topB <= topA + heightA) && (topB + heightB >= topA + heightA) && (leftB + widthB >= leftA)) && ((leftB + widthB <= leftA + widthA));
 
-
-        var result = cantoInferiorDireito || cantoInferiorEsquerdo || cantoSuperiorDireito || cantoSuperiorEsquerdo;
-
+        var colisaoInferiorCompleta = (topA + heightA >= topB) && (topB + heightB >= topA + heightA) && (leftB <= leftA) && (leftB + widthB >= leftA + widthA);
+        var colisaoSuperiorCompleta = (topA <= topB + heightB) && (topB <= topA) && (leftB <= leftA) && (leftB + widthB >= leftA + widthA);
+        var result = cantoInferiorDireito || cantoInferiorEsquerdo || cantoSuperiorDireito || cantoSuperiorEsquerdo || colisaoInferiorCompleta || colisaoSuperiorCompleta;
+        
         return result;
 
     }
