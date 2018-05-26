@@ -4,6 +4,7 @@
     const TAMX = 300;
     const TAMY = 400;
     const PROB_ARVORE = 2;
+    const PROB_COGUMELO = 0.01;
     const FREQUENCIA_HOMEM_MONTANHA = 500;
     const TEMPO_SKIER_PARADO_COLISAO = 100;
     var gameLoop;
@@ -12,6 +13,7 @@
     var direcoes = ['para-esquerda', 'para-frente', 'para-direita']
     var classesObstaculo = ['arvore', 'arvore-chamas', 'rocha', 'toco', 'cachorro', 'arvore-grande'];
     var arvores = [];
+    var cogumelos = [];
     var homemMontanha = null;
 
     function testColisao(a, b) {
@@ -66,6 +68,12 @@
         this.element.style.height = TAMY + "px";
 
         this.fimJogo = function () {
+
+            var frameFimJogo = document.createElement('div');
+            frameFimJogo.className = 'frame-fim-jogo';
+            frameFimJogo.innerHTML = '<h5> FIM DE JOGO! </h5>' +
+                            '<span> Sua pontuacao foi: ' + skier.pontuacao + '</span>'; 
+            montanha.element.appendChild(frameFimJogo);
 
             clearInterval(gameLoop);
         }
@@ -302,8 +310,41 @@
         this.element = document.createElement('div');
         montanha.element.appendChild(this.element);
         this.element.className = 'cogumelo';
-        this.element.style.top = '20px';
+        this.element.style.top = TAMY + "px";
         this.element.style.left = Math.floor(Math.random() * TAMX) + "px";
+        this.continuaNoJogo = 1;
+
+        this.animacaoCogumelo = function (cogumelos) {
+
+            this.continuaNoJogo = 0;
+            this.element.style.display = 'none';
+            this.removeCogumelo(cogumelos);
+        }
+
+        this.andar = function (vel) {
+            this.element.style.top = (parseInt(this.element.style.top) - (1 * vel / 20)) + "px";
+        }
+        
+        this.saiuTela = function () {
+            var style = window.getComputedStyle ? getComputedStyle(this.element, null) : this.element.currentStyle;
+
+            var top = style.top;
+            top = top.substring(0, top.length - 2);
+
+            var height = style.height;
+            height = height.substring(0, height.length - 2);
+
+            if (parseInt(top) + parseInt(height) < 0) {
+                return true;
+            }
+            return false;
+        }
+
+        this.removeCogumelo  = function (cogumelos) {
+            var index = cogumelos.indexOf(this);
+            cogumelos.splice(index, 1);
+            montanha.element.removeChild(this.element);
+        }
     }
 
     function run() {
@@ -314,6 +355,12 @@
             if (random <= PROB_ARVORE * 10) {
                 var arvore = new Arvore();
                 arvores.push(arvore);
+            }
+
+            random = Math.floor(Math.random() * 1000);
+            if (random <= PROB_COGUMELO * 100) {
+                var cogumelo = new Cogumelo();
+                cogumelos.push(cogumelo);
             }
 
             arvores.forEach(function (a) {
@@ -335,6 +382,21 @@
                     a.removeArvore(arvores);
                 }
             });
+
+            cogumelos.forEach(function (c) {
+
+                c.andar(skier.velocidade);
+                if (c.continuaNoJogo && !c.saiuTela()) {
+                    if (testColisao(skier, c)) {
+                        skier.vidas++;
+                        c.animacaoCogumelo(cogumelos);
+                    }
+                }
+
+                if (c.saiuTela()) {
+                    c.removeCogumelo(cogumelos);
+                }
+            })
 
             skier.andar();
 
