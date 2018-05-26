@@ -36,10 +36,10 @@
         var widthB = styleB.width;
         widthB = parseInt(widthB.substring(0, widthB.length - 2));
 
-        var cantoInferiorDireito = ((topB <= topA + heightA) && (leftB <= leftA + widthA)) && ((topB + heightB >= topA + heightA) && (leftB + widthB >= leftA + widthA));
-        var cantoSuperiorDireito = ((topB + heightB >= topA) && (leftB < leftA + widthA)) && ((topB <= topA) && (leftB + widthB >= leftA + widthA));
-        var cantoSuperiorEsquerdo = ((leftB + widthB >= leftA) && (topB + heightB >= topA)) && ((topB <= topA) && (leftB <= leftA));
-        var cantoInferiorEsquerdo = ((topB <= topA + heightA) && (leftB + widthB >= leftA)) && ((topB + heightB >= topA + heightA) && (leftB <= leftA));
+        var cantoInferiorDireito = ((topB <= topA + heightA) && (leftB <= leftA + widthA)) && ((topB + heightB >= topA + heightA));
+        var cantoSuperiorDireito = ((topB + heightB >= topA) && (leftB < leftA + widthA)) && ((topB <= topA));
+        var cantoSuperiorEsquerdo = ((leftB + widthB >= leftA) && (topB + heightB >= topA)) && ((topB <= topA));
+        var cantoInferiorEsquerdo = ((topB <= topA + heightA) && (leftB + widthB >= leftA)) && ((topB + heightB >= topA + heightA));
 
         var result = cantoInferiorDireito || cantoInferiorEsquerdo || cantoSuperiorDireito || cantoSuperiorEsquerdo;
 
