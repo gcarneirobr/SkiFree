@@ -33,6 +33,14 @@
     height: 34px;
 }
 
+.cogumelo {
+    background-image: url(obstacles.png);
+    background-position: -270px -51px;   
+    width: 11px;
+    height: 12px;   
+    position: absolute;
+ }
+
 .arvore {
    background-image: url(obstacles.png);
    background-position: -0px -31px;   
