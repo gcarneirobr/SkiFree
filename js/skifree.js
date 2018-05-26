@@ -41,6 +41,7 @@
         var cantoSuperiorEsquerdo = ((leftB + widthB >= leftA) && (topB + heightB >= topA) && (leftB + widthB <= leftA + widthA)) && ((topB <= topA));
         var cantoInferiorEsquerdo = ((topB <= topA + heightA) && (leftB + widthB >= leftA) && (leftB + widthB <= leftA + widthA)) && ((topB + heightB >= topA + heightA));
 
+
         var result = cantoInferiorDireito || cantoInferiorEsquerdo || cantoSuperiorDireito || cantoSuperiorEsquerdo;
 
         return result;
